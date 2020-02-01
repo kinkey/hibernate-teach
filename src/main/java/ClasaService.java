@@ -1,43 +1,31 @@
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-public class ElevService {
-
-    private static ElevService instance;
-
-    private ElevService() {
-
+public class ClasaService {
+    private static ClasaService instance;
+    private ClasaService() {
     }
-
-    public static ElevService getInstance() {
+    public static ClasaService getInstance() {
         if (instance == null) {
-            instance = new ElevService();
+            instance = new ClasaService();
         }
         return instance;
     }
-
-    public Elevi getElev(Integer id) {
+    public Clasa getClasa(Integer id) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            Elevi elev = session.find(Elevi.class, id);
-            return elev;
+            return session.find(Clasa.class, id);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
-
-
-    public void createElev(Elevi person) {
+    public void createClasa (Clasa clasa) {
         Transaction transaction = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-
-            session.save(person);
-
+            session.save(clasa);
             transaction.commit();
-            session.close();
         } catch (Exception ex) {
             if (transaction != null) {
                 transaction.rollback();
@@ -45,13 +33,26 @@ public class ElevService {
             ex.printStackTrace();
         }
     }
-
-    public void updateElevi(Elevi elevi) {
+    public void updateClasa (Clasa clasa) {
         Transaction transaction = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.update(elevi);
+            session.update(clasa);
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            ex.printStackTrace();
+        }
+    }
+    public void deleteClasa (Clasa clasa) {
+        Transaction transaction = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.delete(clasa);
             transaction.commit();
         } catch (Exception ex) {
             if (transaction != null) {

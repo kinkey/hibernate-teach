@@ -1,7 +1,5 @@
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Elevi {
@@ -12,14 +10,19 @@ public class Elevi {
 
     String numeElev;
 
-    Integer idClasa;
+    @ManyToOne
+    @JoinColumn(name = "idClasa")
+    Clasa clasaDeCareApartineElevul;
+
+    @OneToMany(mappedBy = "elevulCareAObtinuAceastaNota")
+    List<Note> note;
 
     @Override
     public String toString() {
-        return "Elevi{" +
+        return "\nElevi{" +
                 "idElev=" + idElev +
                 ", numeElev='" + numeElev + '\'' +
-                ", idClasa=" + idClasa +
+                ", clasaDeCareApartineElevul=" + clasaDeCareApartineElevul +
                 '}';
     }
 }

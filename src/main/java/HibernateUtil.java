@@ -25,6 +25,10 @@ public class HibernateUtil {
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Elevi.class);
+                configuration.addAnnotatedClass(Clasa.class);
+                configuration.addAnnotatedClass(Profesori.class);
+                configuration.addAnnotatedClass(Materii.class);
+                configuration.addAnnotatedClass(Note.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
